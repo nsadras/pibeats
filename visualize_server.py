@@ -32,11 +32,12 @@ while 1:
     while 1:
         data = connection.recv(1024) # receive up to 1K bytes
         levels = data.strip('[]').split(',') 
+        print levels
         if data:
             led0.ChangeDutyCycle(int(levels[0])) 
-            led0.ChangeDutyCycle(int(levels[1])) 
-            led0.ChangeDutyCycle(int(levels[2]))
-            led0.ChangeDutyCycle(int(levels[3])) 
+            led1.ChangeDutyCycle(int(levels[1])) 
+            led2.ChangeDutyCycle(int(levels[2]))
+            led3.ChangeDutyCycle(int(levels[3])) 
 
         else:
             break
