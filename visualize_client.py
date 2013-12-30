@@ -55,7 +55,7 @@ def visualize(bins):
         
 
     chunk    = 2048 # Change if too fast/slow, never less than 1024
-    scale    = 100   # Change if too dim/bright
+    scale    = 300   # Change if too dim/bright
     exponent = 1    # Change if too little/too much difference between loud and quiet sounds
     sample_rate = 44100 
     device   = 2  # Change to correct input device; use list_devices()
@@ -74,6 +74,14 @@ def visualize(bins):
         while True:
             data = stream.read(chunk)
             levels = analyze(data, chunk, sample_rate, bins)
+            # scale to [0,100]
+            for i in range(bins):
+                levels[i] = max(min((levels[i]*1.0)/scale, 1.0), 0.0)
+                levels[i] = levels[i]**exponent
+                levels[i] = int(levels[i]*100)
+            
+            print levels
+
             s.send(str(levels))
 
     except KeyboardInterrupt:
