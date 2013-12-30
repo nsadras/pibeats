@@ -31,7 +31,7 @@ while 1:
     connection, address = s.accept() # connection is a new socket
     while 1:
         data = connection.recv(1024) # receive up to 1K bytes
-        levels = data.strip('[]').split(',') 
+        levels = data.split('][')[0].strip('[]').split(',')
         print levels
         if data:
             led0.ChangeDutyCycle(int(levels[0])) 
